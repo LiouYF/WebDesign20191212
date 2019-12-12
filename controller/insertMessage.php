@@ -10,7 +10,7 @@
             throw new Exception("error");
         }
 
-        $sql = "INSERT INTO message(context) VALUES('234')";
+        $sql = "INSERT INTO message(context) VALUES('".$message."')";
         $mysqli -> query($sql);
 
         // 跳轉回首頁
@@ -18,6 +18,6 @@
 
     } catch (Exception $e) {
         // 跳轉回首頁
-        header("location: ../views/index.php");
+        // header("location: ../views/index.php");
     }
 ?>

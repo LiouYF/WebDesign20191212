@@ -11,6 +11,8 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     </head>
 
     <body class="bg">
@@ -20,8 +22,8 @@
 
         <div class="w-50 border mx-auto">
             <div class="border mx-auto mt-4 p-2 rounded bg-light input">
-                <form action="../controller/insertMessage.php" mthod="POST">
-                    <input type="text" name="message" class="form-control w-100" placeholder="來點留言吧">
+                <form id="myForm" action="../controller/insertMessage.php" method="POST">
+                    <input id="input" type="text" name="message" class="form-control w-100" placeholder="來點留言吧">
                 </form>
             </div>
 
@@ -41,7 +43,7 @@
                             </div>
                             <div class="float-right">
                                 <button class="btn btn-sm btn-warning text-white">修 改</button>
-                                <button class="btn btn-sm btn-danger text-white">刪 除</button>
+                                <button class="btn btn-sm btn-danger text-white" onclick="test()">刪 除</button>
                             </div>
                         </div>
                     </div>
