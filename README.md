@@ -1,2 +1,2 @@
 # WebDesign20191212
-NKUST Network - Web D
+NKUST Network - Web Design
