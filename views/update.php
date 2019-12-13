@@ -45,15 +45,22 @@
 
         <div class="w-50 border mx-auto">
             <div class="border mx-auto mt-4 p-2 rounded bg-light message-section">
-                <form action="../controller/insertMessage.php" mthod="POST">
-                    <input type="text" class="form-control w-100" value="<?php echo $result["context"]?>">
+                <form id="myForm" action="../controller/updateMessage.php?id=<?php echo $_GET["id"]?>" method="POST">
+                    <input type="text" class="form-control w-100" name="message" value="<?php echo $result["context"]?>">
                 </form>
                 
                 <div class="text-right mt-1">
-                    <button class="btn btn-sm btn-danger text-white">取 消</button>
-                    <button class="btn btn-sm btn-success text-white">儲 存</button>
+                    <button class="btn btn-sm btn-danger text-white" onclick="location.assign('index.php')">取 消</button>
+                    <button class="btn btn-sm btn-success text-white" onclick="subForm()">儲 存</button>
                 </div>
             </div>
         </div>
     </body>
 </html>
+
+<script>
+    function subForm() {
+        var Form = document.getElementById("myForm");
+        Form.submit();
+    }
+</script>

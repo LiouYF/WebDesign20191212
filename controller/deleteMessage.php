@@ -15,8 +15,10 @@
         $sql = "DELETE FROM message WHERE id = " . $id;
         $mysqli -> query($sql);
 
-        header("location: ../views/index.php");
+        // 因為我們透過 AJAX 將資料傳進來，所以不需要將頁面跳轉回首頁
+        // header("location: ../views/index.php");
     } catch (Exception $e) {
-        header("location: ../views/index.php");
+        // 因為我們透過 AJAX 將資料傳進來，所以不需要將頁面跳轉回首頁
+        // header("location: ../views/index.php");
     }
 ?>

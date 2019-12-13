@@ -14,13 +14,12 @@
 
 @keyframes section {
     from {
-        opacity: 0.5;
-        height: 0px;
+        opacity: 0;
         width: 0px;
+        height: 0px;
     }
     to {
         opacity: 1;
-        height: 90px;
         width: 100%;
     }
 }
@@ -39,14 +38,33 @@
 }
 
 .message-section {
-    overflow-y: hidden;
-    height: 90px;
+    word-wrap:break-word;
+    overflow: hidden;
+    min-height: 90px;
     box-shadow: 1px 1px 5px 1px #aaa;
-    animation: section 1s;
+    animation: section .5s;
 }
 
 .input {
     overflow-y: hidden;
     box-shadow: 1px 1px 5px 1px #aaa;
     animation: input 1s;
+}
+
+@keyframes deleteFrame {
+    from {
+        opacity: 1;
+        height: 90px;
+    }
+    to {
+        opacity: 0;
+        height: 0px;
+        margin: 0px;
+        padding: 0px;
+    }
+}
+
+.delete {
+    min-height: 0px;
+    animation: deleteFrame .6s;
 }

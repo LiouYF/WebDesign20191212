@@ -20,11 +20,9 @@
             網 路 位 元 組 - 2019/12/12 上課用
         </div>
 
-        <div class="w-50 border mx-auto">
+        <div id="main" class="w-50 border mx-auto">
             <div class="border mx-auto mt-4 p-2 rounded bg-light input">
-                <form id="myForm" action="../controller/insertMessage.php" method="POST">
-                    <input id="input" type="text" name="message" class="form-control w-100" placeholder="來點留言吧">
-                </form>
+            <input id="input" type="text" name="message" class="form-control w-100" placeholder="來點留言吧">
             </div>
 
             <?php
@@ -33,7 +31,7 @@
                 $select = $mysqli -> query($sql);
                 while ($result = mysqli_fetch_assoc($select)) {
             ?>
-                    <div class="border mx-auto mt-4 p-2 rounded bg-light message-section">
+                    <div id="ID<?php echo $result["id"]?>" class="border mx-auto mt-4 p-2 rounded bg-light message-section">
                         <div class="pb-1">
                             <?php echo $result["context"]?>
                         </div>
@@ -42,8 +40,8 @@
                                 <?php echo $result["createTime"]?>
                             </div>
                             <div class="float-right">
-                                <button class="btn btn-sm btn-warning text-white">修 改</button>
-                                <button class="btn btn-sm btn-danger text-white" onclick="test()">刪 除</button>
+                                <button class="btn btn-sm btn-warning text-white" onclick="location.assign('update.php?id=<?php echo $result["id"]?>')">修 改</button>
+                                <button class="btn btn-sm btn-danger text-white" onclick="deleteMessage(<?php echo $result["id"]?>)">刪 除</button>
                             </div>
                         </div>
                     </div>
@@ -53,3 +51,62 @@
         </div>
     </body>
 </html>
+
+<script>
+    function deleteMessage (id) {
+        var message = "確定要刪除嗎?";
+
+        // 確認使用者是否真的要刪除
+        if (confirm(message)) {
+            // 使用 AJAX 不須重新整理頁面，將刪除資料送到後端去
+            $.ajax({
+                url: "../controller/deleteMessage.php?id=" + id,
+                type: 'GET',
+            });
+
+            // 將訊息 ID 的 DIV 套上 css delete 樣式
+            $("#ID" + id).toggleClass("delete");
+
+            // 設定 450 微秒 0.45s 將訊息 ID 的 DIV 從頁面上移除
+            // 因為需要搭配 css 的動畫時間，所以必須讓 css 動畫跑完再將 div 刪除
+            setTimeout(function(){
+                // 刪除訊息 ID 的 DIV
+                $("#ID" + id).remove();
+            }, 450);
+        }
+    }
+
+    var input = document.getElementById("input");
+    input.onkeydown = function(e){
+        if (e.keyCode == 13) {
+            // 透過 AJAX 不重新整理頁面將資料新增到後端
+            $.ajax({
+                url: '../controller/insertMessage.php',
+                type: 'POST',
+                data: {
+                    'message' : $("#input").val(),
+                },
+                // 成功後
+                success: function(response) {
+                    // 解析 JSON 格式
+                    response = JSON.parse(response);
+
+                    // 製作訊息 DIV
+                    tmp = "";
+                    tmp += "<div id='ID" + response["id"] + "' class='border mx-auto mt-4 p-2 rounded bg-light message-section'>";
+                    tmp += "<div class='pb-1'>" + response["context"] +"</div>";
+                    tmp += "<div class='border-top pt-2'>";
+                    tmp += "<div class='float-left text-secondary'>" + response["createTime"] + "</div>";
+                    tmp += "<div class='float-right'>";
+                    tmp += "<button class='btn btn-sm btn-warning text-white' onclick='location.replace(\'update.php?id=" + response["id"] + "\')'>修 改</button> ";
+                    tmp += "<button class='btn btn-sm btn-danger text-white' onclick='deleteMessage(" + response["id"] + ")'>刪 除</button></div></div></div>";
+
+                    // 累加到 main 中
+                    $("#main").append(tmp);
+                }
+            });
+
+            $("#input").val("");
+        }
+    }
+</script>
